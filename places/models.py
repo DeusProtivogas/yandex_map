@@ -16,10 +16,10 @@ class Place(models.Model):
 
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.placeId}"
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["id"]
         verbose_name = 'Место'
         verbose_name_plural = 'Места'
 
