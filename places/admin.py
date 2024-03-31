@@ -1,0 +1,34 @@
+from django.contrib import admin
+from django import forms
+from django.db.models import TextField
+from django.utils.safestring import mark_safe
+from django.db import models
+from places.models import Place, Photo
+from adminsortable2.admin import SortableAdminMixin, SortableStackedInline
+from tinymce.widgets import TinyMCE
+from tinymce.models import HTMLField
+from tinymce.widgets import TinyMCE
+
+
+class PhotoInline(SortableStackedInline):
+    model = Photo
+    readonly_fields = ["place_image"]
+    fields = ('upload', 'place_image', 'position')
+
+    def place_image(self, obj):
+        return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+            url=obj.upload.url,
+            width=min(obj.upload.width, 250),
+            height=min(obj.upload.height, 200),
+        )
+    )
+
+@admin.register(Place)
+class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):\
+    inlines = [
+        PhotoInline,
+    ]
+
+# Register your models here.
+
+admin.site.register(Photo)
