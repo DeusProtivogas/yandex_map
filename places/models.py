@@ -16,8 +16,8 @@ class Place(models.Model):
 
     class Meta:
         ordering = ["id"]
-        verbose_name = 'Место'
-        verbose_name_plural = 'Места'
+        verbose_name = "Заведение"
+        verbose_name_plural = "Заведения"
 
     def __str__(self):
         return f"{self.placeId}"

@@ -13,10 +13,10 @@ from tinymce.widgets import TinyMCE
 class PhotoInline(SortableStackedInline):
     model = Photo
     readonly_fields = ["place_image"]
-    fields = ('image', 'place_image', 'position')
+    fields = ("image", "place_image", "position")
 
     def place_image(self, obj):
-        return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+        return mark_safe("<img src='{url}' width='{width}' height={height} />".format(
             url=obj.image.url,
             width=min(obj.image.width, 250),
             height=min(obj.image.height, 200),
