@@ -22,8 +22,8 @@ class Command(BaseCommand):
 
                 new_place, created = Place.objects.get_or_create(
                     title = r.json()['title'],
-                    description_short =r.json()['description_short'],
-                    description_long = r.json()['description_long'],
+                    short_description =r.json()['description_short'],
+                    long_description = r.json()['description_long'],
                     coordinates_lon = r.json()['coordinates']['lng'],
                     coordinates_lat = r.json()['coordinates']['lat'],
                 )

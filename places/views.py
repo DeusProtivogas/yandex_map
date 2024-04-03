@@ -37,8 +37,8 @@ def place_detail_view(request, place_id):
         "imgs": [
            img.upload.url for img in list(place.photos.all().order_by('position'))
         ],
-        "description_short": place.description_short,
-        "description_long": place.description_long,
+        "short_description": place.short_description,
+        "long_description": place.long_description,
         "coordinates": {
             "lng": place.coordinates_lon,
             "lat": place.coordinates_lat,
