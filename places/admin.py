@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django import forms
 from django.db.models import TextField
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.db import models
 from places.models import Place, Photo
@@ -12,16 +13,21 @@ from tinymce.widgets import TinyMCE
 
 class PhotoInline(SortableStackedInline):
     model = Photo
-    readonly_fields = ["place_image"]
-    fields = ("image", "place_image", "position")
+    readonly_fields = ["get_image_of_place"]
+    fields = ("image", "get_image_of_place", "position")
 
     def get_image_of_place(self, obj):
-        return mark_safe("<img src='{url}' width='{width}' height={height} />".format(
-            url=obj.image.url,
-            width=min(obj.image.width, 250),
-            height=min(obj.image.height, 200),
+        # return mark_safe("<img src='{url}' width='{width}' height={height} />".format(
+        #     url=obj.image.url,
+        #     width=min(obj.image.width, 250),
+        #     height=min(obj.image.height, 200),
+        # )
+        return format_html("<img src='{url}' width='{width}' height={height} />",
+                           url=obj.image.url,
+                           width=min(obj.image.width, 250),
+                           height=200,
+                    # mark_safe(some_html), some_text, some_other_text)
         )
-    )
 
 @admin.register(Place)
 class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):\
