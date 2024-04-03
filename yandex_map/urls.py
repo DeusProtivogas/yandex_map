@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
-from yandex_map import settings
+# from yandex_map import settings
+from django.conf import settings
+
 from yandex_map.views import main_page, place_detail_view
 
 urlpatterns = [
