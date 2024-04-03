@@ -40,7 +40,7 @@ class Command(BaseCommand):
                             # upload=photo_upload,
                             place=new_place,
                         )
-                        photo[0].upload.save(f"{p.split('/media/')[-1]}", ContentFile(new_r.content), save=True)
+                        photo[0].image.save(f"{p.split('/media/')[-1]}", ContentFile(new_r.content), save=True)
                         # print(i)
                         # break
         except TypeError:
