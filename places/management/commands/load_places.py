@@ -18,7 +18,6 @@ class Command(BaseCommand):
                 print(address)
                 r = requests.get(address,)
                 print(r.status_code)
-                # print(r.json())
 
                 new_place, created = Place.objects.get_or_create(
                     title = r.json()["title"],
@@ -33,29 +32,11 @@ class Command(BaseCommand):
 
                     for pos, p in enumerate(r.json()["imgs"]):
                         new_r = requests.get(p)
-                        # print(new_r.content)
-                        # photo_upload = Image.open(BytesIO(new_r.content)).save(f"{p.split("/media/")[-1]}")
                         photo = Photo.objects.get_or_create(
                             position=pos,
                             # upload=photo_upload,
                             place=new_place,
                         )
                         photo[0].image.save(f"{p.split('/media/')[-1]}", ContentFile(new_r.content), save=True)
-                        # print(i)
-                        # break
         except TypeError:
             print("Type error")
-    # def add_arguments(self, parser):
-    #     parser.add_argument('poll_ids', nargs='+', type=int)
-    #
-    # def handle(self, *args, **options):
-    #     for poll_id in options['poll_ids']:
-    #         try:
-    #             poll = Poll.objects.get(pk=poll_id)
-    #         except Poll.DoesNotExist:
-    #             raise CommandError('Poll "%s" does not exist' % poll_id)
-    #
-    #         poll.opened = False
-    #         poll.save()
-    #
-    #         self.stdout.write(self.style.SUCCESS('Successfully closed poll "%s"' % poll_id))

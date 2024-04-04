@@ -30,7 +30,6 @@ class Photo(models.Model):
         on_delete=models.CASCADE,
     )
 
-
     class Meta:
         ordering = ["position"]
 

@@ -26,7 +26,3 @@ class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
     raw_id_fields = ("place",)
-
-# Register your models here.
-
-# admin.site.register(Photo)
