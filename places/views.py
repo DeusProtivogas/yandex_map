@@ -14,17 +14,24 @@ def get_locations():
                 "type": "Feature",
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [place.coordinates_lon, place.coordinates_lat]
+                    "coordinates": [
+                        place.coordinates_lon,
+                        place.coordinates_lat
+                    ]
                 },
                 "properties": {
                     "title": place.title,
                     "placeId": place.placeId,
-                    "detailsUrl": reverse(place_detail_view , args=[place.placeId]),
+                    "detailsUrl": reverse(
+                        place_detail_view,
+                        args=[place.placeId]
+                    ),
                 }
             } for place in locations
         ]
     }
     return locations_json
+
 
 def place_detail_view(request, place_id):
     place = Place.objects.filter(placeId=place_id).first()
@@ -32,7 +39,9 @@ def place_detail_view(request, place_id):
     place_json = {
         "title": place.title,
         "imgs": [
-           img.image.url for img in list(place.photos.all().order_by("position"))
+           img.image.url for img in list(
+                place.photos.all().order_by("position")
+            )
         ],
         "short_description": place.short_description,
         "long_description": place.long_description,
@@ -41,7 +50,11 @@ def place_detail_view(request, place_id):
             "lat": place.coordinates_lat,
         }
     }
-    return JsonResponse(place_json, safe=False, json_dumps_params={"ensure_ascii": False, "indent": 4})
+    return JsonResponse(
+        place_json,
+        safe=False,
+        json_dumps_params={"ensure_ascii": False, "indent": 4}
+    )
 
 
 def main_page(request):
@@ -52,4 +65,3 @@ def main_page(request):
     context = {"locations": locations}
     rendered_page = template.render(context, request)
     return HttpResponse(rendered_page)
-

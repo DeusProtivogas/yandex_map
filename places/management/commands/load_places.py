@@ -20,11 +20,11 @@ class Command(BaseCommand):
                 print(r.status_code)
 
                 new_place, created = Place.objects.get_or_create(
-                    title = r.json()["title"],
-                    short_description =r.json()["description_short"],
-                    long_description = r.json()["description_long"],
-                    coordinates_lon = r.json()["coordinates"]["lng"],
-                    coordinates_lat = r.json()["coordinates"]["lat"],
+                    title=r.json()["title"],
+                    short_description=r.json()["description_short"],
+                    long_description=r.json()["description_long"],
+                    coordinates_lon=r.json()["coordinates"]["lng"],
+                    coordinates_lat=r.json()["coordinates"]["lat"],
                 )
                 if created:
                     new_place.placeId = str(len(Place.objects.all()) + 1)
@@ -37,6 +37,10 @@ class Command(BaseCommand):
                             # upload=photo_upload,
                             place=new_place,
                         )
-                        photo[0].image.save(f"{p.split('/media/')[-1]}", ContentFile(new_r.content), save=True)
+                        photo[0].image.save(
+                            f"{p.split('/media/')[-1]}",
+                            ContentFile(new_r.content),
+                            save=True
+                        )
         except TypeError:
             print("Type error")
