@@ -1,14 +1,8 @@
 from django.contrib import admin
-from django import forms
-from django.db.models import TextField
 from django.utils.html import format_html
-from django.utils.safestring import mark_safe
-from django.db import models
-from places.models import Place, Photo
 from adminsortable2.admin import SortableAdminMixin, SortableStackedInline
-from tinymce.widgets import TinyMCE
-from tinymce.models import HTMLField
-from tinymce.widgets import TinyMCE
+
+from places.models import Place, Photo
 
 
 class PhotoInline(SortableStackedInline):
@@ -17,24 +11,22 @@ class PhotoInline(SortableStackedInline):
     fields = ("image", "get_image_of_place", "position")
 
     def get_image_of_place(self, obj):
-        # return mark_safe("<img src='{url}' width='{width}' height={height} />".format(
-        #     url=obj.image.url,
-        #     width=min(obj.image.width, 250),
-        #     height=min(obj.image.height, 200),
-        # )
         return format_html("<img src='{url}' width='{width}' height={height} />",
                            url=obj.image.url,
                            width=min(obj.image.width, 250),
                            height=200,
-                    # mark_safe(some_html), some_text, some_other_text)
         )
 
 @admin.register(Place)
-class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):\
+class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [
         PhotoInline,
     ]
 
+@admin.register(Photo)
+class PhotoAdmin(admin.ModelAdmin):
+    raw_id_fields = ("place",)
+
 # Register your models here.
 
-admin.site.register(Photo)
+# admin.site.register(Photo)

@@ -1,10 +1,10 @@
 import requests
-from PIL import Image
-from io import BytesIO
-from django.core.files.base import ContentFile
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.files.base import ContentFile
+from django.core.management.base import BaseCommand
+
 from places.models import Place, Photo
+
 
 class Command(BaseCommand):
     help = "Add more locations to the database"
