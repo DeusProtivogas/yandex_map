@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 
 from places.models import Place
 
@@ -34,8 +35,7 @@ def get_locations():
 
 
 def place_detail_view(request, place_id):
-    # place = Place.objects.filter(placeId=place_id).prefetch_related('photos').first()
-    place = get_object_or_404(Place.objects.prefetch_related('photos'), placeId=place_id)
+    place = get_object_or_404(Place.objects.prefetch_related("photos"), placeId=place_id)
 
     place_json = {
         "title": place.title,
@@ -60,8 +60,4 @@ def place_detail_view(request, place_id):
 def main_page(request):
 
     locations = get_locations()
-
-    template = loader.get_template("index.html")
-    context = {"locations": locations}
-    rendered_page = template.render(context, request)
-    return HttpResponse(rendered_page)
+    return render(request, "index.html", context={"locations": locations})
