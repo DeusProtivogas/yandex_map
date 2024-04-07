@@ -29,19 +29,20 @@ class Command(BaseCommand):
                     }
                 )
                 if created:
-                    new_place.save()
 
                     for position, picture in enumerate(response.json()["imgs"]):
                         new_response = requests.get(picture)
                         photo = Photo.objects.get_or_create(
                             position=position,
                             place=new_place,
+                            image=ContentFile(
+                                content=new_response.content,
+                                name=f"{picture.split('/media/')[-1]}"
+                            ),
                         )
-                        photo[0].image.save(
-                            f"{picture.split('/media/')[-1]}",
-                            ContentFile(new_response.content),
-                            save=True
-                        )
+                        photo[0].save()
+
+                    new_place.save()
                 else:
                     print("Place already exists!")
         except requests.exceptions.MissingSchema:
