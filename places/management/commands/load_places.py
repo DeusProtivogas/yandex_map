@@ -44,5 +44,7 @@ class Command(BaseCommand):
                         )
                 else:
                     print("Place already exists!")
+        except requests.exceptions.MissingSchema:
+            print("Invalid URL")
         except TypeError:
             print("Type error")
