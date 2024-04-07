@@ -1,5 +1,4 @@
-from django.http import HttpResponse, JsonResponse
-from django.template import loader
+from django.http import JsonResponse
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
@@ -40,8 +39,7 @@ def place_detail_view(request, place_id):
     place_json = {
         "title": place.title,
         "imgs": [
-           img.image.url for img in
-                place.photos.all().order_by("position")
+           img.image.url for img in place.photos.all().order_by("position")
         ],
         "short_description": place.short_description,
         "long_description": place.long_description,
