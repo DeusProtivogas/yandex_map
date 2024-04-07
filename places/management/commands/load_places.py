@@ -17,12 +17,14 @@ class Command(BaseCommand):
             for address in options["json_address"]:
                 response = requests.get(address,)
 
+                formatted_response = response.json()
+
                 new_place, created = Place.objects.get_or_create(
-                    title=response.json()["title"],
-                    short_description=response.json()["description_short"],
-                    long_description=response.json()["description_long"],
-                    coordinates_lon=response.json()["coordinates"]["lng"],
-                    coordinates_lat=response.json()["coordinates"]["lat"],
+                    title=formatted_response["title"],
+                    short_description=formatted_response["description_short"],
+                    long_description=formatted_response["description_long"],
+                    coordinates_lon=formatted_response["coordinates"]["lng"],
+                    coordinates_lat=formatted_response["coordinates"]["lat"],
                 )
                 if created:
                     new_place.placeId = str(len(Place.objects.all()) + 1)
