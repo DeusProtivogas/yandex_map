@@ -21,13 +21,14 @@ class Command(BaseCommand):
 
                 new_place, created = Place.objects.get_or_create(
                     title=formatted_response["title"],
-                    short_description=formatted_response["description_short"],
-                    long_description=formatted_response["description_long"],
-                    coordinates_lon=formatted_response["coordinates"]["lng"],
-                    coordinates_lat=formatted_response["coordinates"]["lat"],
+                    defaults={
+                        "short_description": formatted_response["description_short"],
+                        "long_description": formatted_response["description_long"],
+                        "coordinates_lon": formatted_response["coordinates"]["lng"],
+                        "coordinates_lat": formatted_response["coordinates"]["lat"],
+                    }
                 )
                 if created:
-                    new_place.placeId = str(len(Place.objects.all()) + 1)
                     new_place.save()
 
                     for position, picture in enumerate(response.json()["imgs"]):
@@ -41,5 +42,7 @@ class Command(BaseCommand):
                             ContentFile(new_response.content),
                             save=True
                         )
+                else:
+                    print("Place already exists!")
         except TypeError:
             print("Type error")
