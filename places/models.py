@@ -3,8 +3,9 @@ from tinymce.models import HTMLField
 
 
 class Place(models.Model):
-    placeId = models.CharField(max_length=50, unique=True)
-    title = models.CharField(max_length=200)
+    placeId = models.BigAutoField(primary_key=True)
+    # placeId = models.CharField(max_length=50, unique=True)
+    title = models.CharField(max_length=200, unique=True)
     short_description = models.TextField(blank=True)
     long_description = HTMLField(blank=True)
 
@@ -12,12 +13,12 @@ class Place(models.Model):
     coordinates_lat = models.FloatField()
 
     class Meta:
-        ordering = ["id"]
+        ordering = ["placeId"]
         verbose_name = "Заведение"
         verbose_name_plural = "Заведения"
 
     def __str__(self):
-        return f"{self.placeId}"
+        return f"{self.title}"
 
 
 class Photo(models.Model):
