@@ -15,9 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             for address in options["json_address"]:
-                print(address)
                 r = requests.get(address,)
-                print(r.status_code)
 
                 new_place, created = Place.objects.get_or_create(
                     title=r.json()["title"],
