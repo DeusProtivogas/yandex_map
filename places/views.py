@@ -8,7 +8,7 @@ from places.models import Place
 
 def get_locations():
     locations = Place.objects.all()
-    locations_json = {
+    return {
         "type": "FeatureCollection",
         "features": [
             {
@@ -31,7 +31,6 @@ def get_locations():
             } for place in locations
         ]
     }
-    return locations_json
 
 
 def place_detail_view(request, place_id):
