@@ -15,29 +15,28 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             for address in options["json_address"]:
-                r = requests.get(address,)
+                response = requests.get(address,)
 
                 new_place, created = Place.objects.get_or_create(
-                    title=r.json()["title"],
-                    short_description=r.json()["description_short"],
-                    long_description=r.json()["description_long"],
-                    coordinates_lon=r.json()["coordinates"]["lng"],
-                    coordinates_lat=r.json()["coordinates"]["lat"],
+                    title=response.json()["title"],
+                    short_description=response.json()["description_short"],
+                    long_description=response.json()["description_long"],
+                    coordinates_lon=response.json()["coordinates"]["lng"],
+                    coordinates_lat=response.json()["coordinates"]["lat"],
                 )
                 if created:
                     new_place.placeId = str(len(Place.objects.all()) + 1)
                     new_place.save()
 
-                    for pos, p in enumerate(r.json()["imgs"]):
-                        new_r = requests.get(p)
+                    for position, picture in enumerate(response.json()["imgs"]):
+                        new_response = requests.get(picture)
                         photo = Photo.objects.get_or_create(
-                            position=pos,
-                            # upload=photo_upload,
+                            position=position,
                             place=new_place,
                         )
                         photo[0].image.save(
-                            f"{p.split('/media/')[-1]}",
-                            ContentFile(new_r.content),
+                            f"{picture.split('/media/')[-1]}",
+                            ContentFile(new_response.content),
                             save=True
                         )
         except TypeError:
