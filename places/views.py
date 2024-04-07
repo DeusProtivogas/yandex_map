@@ -41,9 +41,8 @@ def place_detail_view(request, place_id):
     place_json = {
         "title": place.title,
         "imgs": [
-           img.image.url for img in list(
+           img.image.url for img in
                 place.photos.all().order_by("position")
-            )
         ],
         "short_description": place.short_description,
         "long_description": place.long_description,
