@@ -59,6 +59,22 @@ python manage.py runserver
 [Ссылка на сайт](https://deusprotivogas.pythonanywhere.com/)
 
 
+## load_places
+Скрипт в `manage.py`, который позволяет добавить новые места на карту.
 
+За основы взяты данные в формате по [по ссылке](https://github.com/devmanorg/where-to-go-places/tree/master/places).
 
+Пример:
+
+```
+python manage.py load_places https://ссылка.json
+```
+добавит на карту локацию по ссылке.
+
+```
+python manage.py load_places invalid_url
+```
+скажет, что введенный url неправильного формата
+
+При добавлении уже существующей локации (проверяется по названию), скрипт сообщит, что такая локация уже существует.
 
