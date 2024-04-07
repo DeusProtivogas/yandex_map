@@ -34,7 +34,7 @@ def get_locations():
 
 
 def place_detail_view(request, place_id):
-    place = Place.objects.filter(placeId=place_id).first()
+    place = Place.objects.filter(placeId=place_id).prefetch_related('photos').first()
 
     place_json = {
         "title": place.title,
