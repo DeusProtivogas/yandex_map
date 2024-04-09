@@ -41,8 +41,6 @@ class Command(BaseCommand):
                             ),
                         )
                         photo[0].save()
-
-                    new_place.save()
                 else:
                     print("Place already exists!")
         except requests.exceptions.MissingSchema:
