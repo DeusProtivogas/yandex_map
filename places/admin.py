@@ -12,10 +12,10 @@ class PhotoInline(SortableStackedInline):
 
     def get_image_of_place(self, obj):
         return format_html(
-            "<img src='{url}' width='{width}' height={height} />",
+            "<img src='{url}' style='max-width:{max_width}px; max-height:{max_height}px'/>",
             url=obj.image.url,
-            width=min(obj.image.width, 250),
-            height=200,
+            max_width=min(obj.image.width, 250),
+            max_height=200,
                            )
 
 
