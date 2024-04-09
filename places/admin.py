@@ -7,10 +7,10 @@ from places.models import Place, Photo
 
 class PhotoInline(SortableStackedInline):
     model = Photo
-    readonly_fields = ["get_image_of_place"]
-    fields = ("image", "get_image_of_place", "position")
+    readonly_fields = ["get_preview"]
+    fields = ("image", "get_preview", "position")
 
-    def get_image_of_place(self, obj):
+    def get_preview(self, obj):
         return format_html(
             "<img src='{url}' style='max-width:{max_width}px; max-height:{max_height}px'/>",
             url=obj.image.url,
