@@ -40,7 +40,6 @@ class Command(BaseCommand):
                                 name=f"{picture.split('/media/')[-1]}"
                             ),
                         )
-                        photo[0].save()
                 else:
                     print("Place already exists!")
         except requests.exceptions.MissingSchema:
